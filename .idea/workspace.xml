@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff6f2996-671d-44e7-b62f-98f671093bc4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compLing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compLing.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tonality/classifier.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/Tonality/classifier.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tonality/defin_ton_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tonality/ton_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tonality/model_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tonality/model_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tonality/ton_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tonality/ton_db.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +142,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1591691767241</updated>
-      <workItem from="1591691770156" duration="21098000" />
+      <workItem from="1591691770156" duration="22727000" />
+      <workItem from="1591774327887" duration="5018000" />
     </task>
     <servers />
   </component>
@@ -160,38 +159,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1419" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1591704629768" />
-    <state width="1493" height="192" key="GridCell.Tab.0.bottom" timestamp="1591726013426">
+    <state width="1493" height="215" key="GridCell.Tab.0.bottom" timestamp="1591779561375">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591726013426" />
-    <state width="1493" height="192" key="GridCell.Tab.0.center" timestamp="1591726013426">
+    <state width="1493" height="215" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591779561375" />
+    <state width="1493" height="215" key="GridCell.Tab.0.center" timestamp="1591779561375">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1591726013426" />
-    <state width="1493" height="192" key="GridCell.Tab.0.left" timestamp="1591726013426">
+    <state width="1493" height="215" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1591779561375" />
+    <state width="1493" height="215" key="GridCell.Tab.0.left" timestamp="1591779561374">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1591726013426" />
-    <state width="1493" height="192" key="GridCell.Tab.0.right" timestamp="1591726013426">
+    <state width="1493" height="215" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1591779561374" />
+    <state width="1493" height="215" key="GridCell.Tab.0.right" timestamp="1591779561375">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1591726013426" />
-    <state width="724" height="172" key="GridCell.Tab.1.bottom" timestamp="1591719725863">
+    <state width="1493" height="215" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1591779561375" />
+    <state width="724" height="172" key="GridCell.Tab.1.bottom" timestamp="1591734496593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="172" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591719725863" />
-    <state width="724" height="172" key="GridCell.Tab.1.center" timestamp="1591719725862">
+    <state width="724" height="172" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1591734496593" />
+    <state width="724" height="172" key="GridCell.Tab.1.center" timestamp="1591734496593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="172" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1591719725862" />
-    <state width="724" height="172" key="GridCell.Tab.1.left" timestamp="1591719725862">
+    <state width="724" height="172" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1591734496593" />
+    <state width="724" height="172" key="GridCell.Tab.1.left" timestamp="1591734496593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="172" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1591719725862" />
-    <state width="724" height="172" key="GridCell.Tab.1.right" timestamp="1591719725863">
+    <state width="724" height="172" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1591734496593" />
+    <state width="724" height="172" key="GridCell.Tab.1.right" timestamp="1591734496593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="172" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1591719725863" />
+    <state width="724" height="172" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1591734496593" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1591706143957">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -209,8 +208,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/compLing$model_generator.coverage" NAME="model_generator Coverage Results" MODIFIED="1591716682237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
-    <SUITE FILE_PATH="coverage/compLing$ton_db.coverage" NAME="ton_db Coverage Results" MODIFIED="1591726258659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
+    <SUITE FILE_PATH="coverage/compLing$model_generator.coverage" NAME="model_generator Coverage Results" MODIFIED="1591778074255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
+    <SUITE FILE_PATH="coverage/compLing$ton_db.coverage" NAME="ton_db Coverage Results" MODIFIED="1591779826327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
     <SUITE FILE_PATH="coverage/compLing$load_lib.coverage" NAME="load_lib Coverage Results" MODIFIED="1591715965376" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
     <SUITE FILE_PATH="coverage/compLing$dsg.coverage" NAME="dsg Coverage Results" MODIFIED="1591715977516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tonality" />
   </component>

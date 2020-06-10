@@ -38,9 +38,9 @@ def get_all_words(cleaned_tokens_list):
             yield token
 
 #Создание словаря
-def get_tweets_for_model(cleaned_tokens_list):
+def get_tweets_for_model(cleaned_tokens_list, word_features):
     for tweet_tokens in cleaned_tokens_list:
-        yield dict([token,True]for token in tweet_tokens)
+        yield dict([token,token in word_features]for token in tweet_tokens)
 
 
 
@@ -79,11 +79,14 @@ if __name__ == "__main__":
     # Получим частоту встречаемости
     all_pos_words = get_all_words(positive_cleaned_tokens_list)
     freq_dist_pos = FreqDist(all_pos_words)
-    print(freq_dist_pos.most_common(10))
+    word_features_pos = list(freq_dist_pos)[:2000]
+    all_neg_words = get_all_words(negative_cleaned_tokens_list)
+    freq_dist_neg = FreqDist(all_neg_words)
+    word_features_neg = list(freq_dist_neg)[:2000]
 
     # Создание словарей
-    positive_tokens_for_model = get_tweets_for_model(positive_cleaned_tokens_list)
-    negative_tokens_for_model = get_tweets_for_model(negative_cleaned_tokens_list)
+    positive_tokens_for_model = get_tweets_for_model(positive_cleaned_tokens_list, word_features_pos)
+    negative_tokens_for_model = get_tweets_for_model(negative_cleaned_tokens_list, word_features_neg)
 
     # Создание обучающей и тестовой выборки
     positive_dataset = [(tweet_dict, "Positive") for tweet_dict in positive_tokens_for_model]
@@ -102,6 +105,14 @@ if __name__ == "__main__":
     f = open('classifier.pickle', 'wb')
     pickle.dump(classifier, f)
     f.close()
+
+    errors = []
+    for (name, tag) in test_data:
+        guess = classifier.classify(name)
+        if guess != tag:
+            errors.append((tag, guess, name))
+    for err in errors:
+        print(err)
 
 
 

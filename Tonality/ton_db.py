@@ -38,16 +38,19 @@ def in_bd(db):
     person = db.person
     new_person = [{"person": "ЛЯХОВА НАТАЛЬЯ",
                   "text": ["В администрации Волгоградской области опубликовали среднюю зарплату за 2019 год главных врачей , главных бухгалтеров и заместителей главных врачей медицинских организаций региона – больниц , поликлиник , центров и диспансеров .",
-                           "Как сообщает ИА Высота 102 со ссылкой на эти данные , самым высокооплачиваемым главным врачом среди медучреждений региона стала Наталья Ляхова . ",],
+                           "Как сообщает ИА Высота 102 со ссылкой на эти данные , самым высокооплачиваемым главным врачом среди медучреждений региона стала Наталья Ляхова . "],
+                  "textton": [],
                   "ton": 0
                   },
                  {"author": "КУШНИРУК НАТАЛЬЯ",
                   "text": ["Среднемесячная зарплата главного врача городской клинической больницы скорой медицинской помощи № 25 за прошлый год составила 135 тысяч 422 рубля .",
                            "Немногим меньше получала главный врач областной клинической больницы № 1 Наталья Кушнирук – 124 тысячи 832 рубля . "],
+                  "textton": [],
                   "ton": 0
                   },
                  {"author": "ВЕРОВСКАЯ ТАТЬЯНА",
                   "text": ["Главный врач Волгоградского клинического перинатального центра № 2 Татьяна Веровская зарабатывала в прошлом году в среднем 114 тысяч 344 рубля в месяц ."],
+                  "textton":[],
                   "ton": 0
                   }
                  ]
@@ -56,15 +59,18 @@ def in_bd(db):
 def get_ton(classifier,tknzr,stop_words,stemmer, text):
     tokens = []
     for texti in text:
-        tokens.append(remove_noise(stemmer, tknzr.tokenize(texti), stop_words))
+        tokens.append(remove_noise(stemmer, tknzr.tokenize(texti[0]), stop_words))
     tokens_mod = get_tweets_for_model(tokens)
     positive_tokens = [(dict, "Positive") for dict in tokens_mod] #Считаем, что все предложения положительны
     tonperson = classify.accuracy(classifier, positive_tokens) #Получаем на сколько положительны
 
 
-    # for tokensi in tokens:
-    #     print("{}: {}".format(tokensi, classifier.prob_classify(dict([token, True] for token in tokensi)).prob()))
-    return tonperson
+    textton=[]
+
+    for tokensi in tokens:
+        textton.append(classifier.classify(dict([token, True] for token in tokensi)))
+    print(textton)
+    return tonperson,textton
 
 
 if __name__ == "__main__":
@@ -76,7 +82,7 @@ if __name__ == "__main__":
         #Подключаемся к базе данных
         client = MongoClient('mongodb://localhost:27017/')
         db = client.test_database
-        in_bd(db)
+        #in_bd(db)
 
         #Подключае модель и необходимые элементы анализа
         f = open('classifier.pickle', 'rb')
@@ -86,12 +92,13 @@ if __name__ == "__main__":
         stop_words = stopwords.words("russian")
         stemmer = pymorphy2.MorphAnalyzer()
 
+
         #Обработка персон
         person = db.person
         for personi in person.find():
-            ton = get_ton(classifier,tknzr,stop_words,stemmer, personi["text"])
+            ton,textton = get_ton(classifier,tknzr,stop_words,stemmer, personi["text"])
             person.update_one({"_id": personi["_id"]},  {"$set":{"ton": ton}})
-
+            person.update_one({"_id": personi["_id"]}, {"$set": {"textton": textton}})
 
 
 
