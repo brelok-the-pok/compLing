@@ -1,14 +1,10 @@
 from nltk.tag import pos_tag
-from nltk.stem.wordnet import WordNetLemmatizer
 from nltk import FreqDist, classify, NaiveBayesClassifier
-from nltk.corpus import stopwords, twitter_samples
-from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 from nltk.tokenize import TweetTokenizer
 import re, string,random
 import pandas as pd
-from nltk.stem import SnowballStemmer
 import pickle
-from pathlib import Path
 import pymorphy2
 
 #Устранение шума, нормализация
@@ -20,10 +16,12 @@ def remove_noise(stemmer, tweet_tokens,stop_words=()):
         '(?:%[0-9a-zA-Z][0-9a-zA-Z]))+','', token)
         token=re.sub("(@[A-Za-z0-9_]+)","", token)
         token = re.sub("RT", "", token)
-        if token not in string.punctuation:
+        token = re.sub("(\.{2,})", "", token)
+
+        if token not in string.punctuation and tag!="NONLEX":
             if tag!="NONLEX":
                 token=stemmer.parse(token)[0].normal_form
-
+                token = re.sub("(^это$|^весь$|^ещё$)", "", token)
             #оставим только не пустые, не знак пунктуации и не стоп слово
             if len(token)>0  and token.lower() not in stop_words:
                 cleaned_tokens.append(token.lower())#в нижнем регистре
@@ -31,7 +29,7 @@ def remove_noise(stemmer, tweet_tokens,stop_words=()):
 
 
 
-#Генератор токенов из списка
+#Получение форматированного списка токенов
 def get_all_words(cleaned_tokens_list):
     for tokens in cleaned_tokens_list:
         for token in tokens:
@@ -45,7 +43,7 @@ def get_tweets_for_model(cleaned_tokens_list, word_features):
 
 
 
-if __name__ == "__main__":
+def __main__():
     # Загрузка данных их файла
     file_pos = pd.read_csv('positive.csv', sep=';')
     file_neg = pd.read_csv('negative.csv', sep=';')
@@ -67,8 +65,6 @@ if __name__ == "__main__":
     stemmer = pymorphy2.MorphAnalyzer()
     positive_cleaned_tokens_list = []
     negative_cleaned_tokens_list = []
-
-    indextwet=0
     for tokens in positive_tweet_tokens:
         positive_cleaned_tokens_list.append(remove_noise(stemmer, tokens, stop_words))
     print(positive_cleaned_tokens_list[500])
@@ -79,10 +75,12 @@ if __name__ == "__main__":
     # Получим частоту встречаемости
     all_pos_words = get_all_words(positive_cleaned_tokens_list)
     freq_dist_pos = FreqDist(all_pos_words)
-    word_features_pos = list(freq_dist_pos)[:2000]
+    word_features_pos = list(freq_dist_pos)[:4000]
+    print(list(freq_dist_pos)[:10])
     all_neg_words = get_all_words(negative_cleaned_tokens_list)
     freq_dist_neg = FreqDist(all_neg_words)
-    word_features_neg = list(freq_dist_neg)[:2000]
+    word_features_neg = list(freq_dist_neg)[:4000]
+    print(list(freq_dist_neg)[:10])
 
     # Создание словарей
     positive_tokens_for_model = get_tweets_for_model(positive_cleaned_tokens_list, word_features_pos)
@@ -106,13 +104,16 @@ if __name__ == "__main__":
     pickle.dump(classifier, f)
     f.close()
 
-    errors = []
-    for (name, tag) in test_data:
-        guess = classifier.classify(name)
-        if guess != tag:
-            errors.append((tag, guess, name))
-    for err in errors:
-        print(err)
+    # errors = []
+    # for (name, tag) in test_data:
+    #     guess = classifier.classify(name)
+    #     if guess != tag:
+    #         errors.append((tag, guess, name))
+    # for err in errors:
+    #     print(err)
+
+if __name__ == "__main__":
+    __main__()
 
 
 
