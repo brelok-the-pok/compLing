@@ -64,12 +64,32 @@ def __main__():
         # Обработка персон
         personTon = db.PersonsTon #новая таблица тональностей персон и предложений
         personNews = db.PersonsToNews
+        update=0
+        new=0
         for personNewsi in personNews.find():
             ton, textton = get_ton(classifier, tknzr, stop_words, stemmer, personNewsi["news"])
             if personTon.find({"_id": personNewsi["_id"]}).count()==0:#если нет
                 personTon.insert_one({"_id": personNewsi["_id"], "textton": textton, "ton": ton})
+                new=new+1
             else:
                 personTon.update_one({"_id": personNewsi["_id"]}, {"$set": {"textton": textton, "ton": ton}})
+                update=update+1
+        print('new:{} update:{}'.format(new, update))
+
+        # Обработка мест
+        placeTon = db.PlaceTon #новая таблица тональностей персон и предложений
+        placeNews = db.PlaceToNews
+        update=0
+        new=0
+        for placeNewsi in placeNews.find():
+            ton, textton = get_ton(classifier, tknzr, stop_words, stemmer, placeNewsi["news"])
+            if placeTon.find({"_id": placeNewsi["_id"]}).count()==0:#если нет
+                placeTon.insert_one({"_id": placeNewsi["_id"], "textton": textton, "ton": ton})
+                new = new + 1
+            else:
+                placeTon.update_one({"_id": placeNewsi["_id"]}, {"$set": {"textton": textton, "ton": ton}})
+                update = update + 1
+        print('new:{} update:{}'.format(new, update))
 
 if __name__ == "__main__":
     __main__()
