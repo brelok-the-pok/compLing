@@ -27,9 +27,9 @@ def get_for_model(cleaned_tokens_list):
         yield dict([token, True] for token in tweet_tokens)
 
 
-def get_ton(classifier, tknzr, stop_words, stemmer, text):
+def get_ton(classifier, tknzr, stop_words, stemmer, text, list_priority):
     tokens = []
-    for texti in text:
+    for texti in text+list_priority:
         tokens.append(remove_noise(stemmer, tknzr.tokenize(texti), stop_words))
     tokens_mod = get_for_model(tokens)
     positive_tokens = [(dict, "Positive") for dict in tokens_mod]  # Считаем, что все предложения положительны
@@ -37,6 +37,9 @@ def get_ton(classifier, tknzr, stop_words, stemmer, text):
 
     textton = []
 
+    tokens = []
+    for texti in text:
+        tokens.append(remove_noise(stemmer, tknzr.tokenize(texti), stop_words))
     for tokensi in tokens:
         textton.append(classifier.classify(dict([token, True] for token in tokensi)))
     return tonperson, textton
@@ -61,35 +64,13 @@ def __main__():
         stop_words = stopwords.words("russian")
         stemmer = pymorphy2.MorphAnalyzer()
 
-        # Обработка персон
-        personTon = db.PersonsTon #новая таблица тональностей персон и предложений
-        personNews = db.PersonsToNews
-        update=0
-        new=0
-        for personNewsi in personNews.find():
-            ton, textton = get_ton(classifier, tknzr, stop_words, stemmer, personNewsi["news"])
-            if personTon.find({"_id": personNewsi["_id"]}).count()==0:#если нет
-                personTon.insert_one({"_id": personNewsi["_id"], "textton": textton, "ton": ton})
-                new=new+1
-            else:
-                personTon.update_one({"_id": personNewsi["_id"]}, {"$set": {"textton": textton, "ton": ton}})
-                update=update+1
-        print('new:{} update:{}'.format(new, update))
-
-        # Обработка мест
-        placeTon = db.PlaceTon #новая таблица тональностей персон и предложений
-        placeNews = db.PlaceToNews
-        update=0
-        new=0
-        for placeNewsi in placeNews.find():
-            ton, textton = get_ton(classifier, tknzr, stop_words, stemmer, placeNewsi["news"])
-            if placeTon.find({"_id": placeNewsi["_id"]}).count()==0:#если нет
-                placeTon.insert_one({"_id": placeNewsi["_id"], "textton": textton, "ton": ton})
-                new = new + 1
-            else:
-                placeTon.update_one({"_id": placeNewsi["_id"]}, {"$set": {"textton": textton, "ton": ton}})
-                update = update + 1
-        print('new:{} update:{}'.format(new, update))
+        # Обработка новостей персон и достопримечательностей
+        allNews = db.NamesSynonyms
+        for allNewsi in allNews.find():
+            print("\nid:{}".format(allNewsi["_id"]))
+            ton, textton = get_ton(classifier, tknzr, stop_words, stemmer, allNewsi["news"][:-3],allNewsi["synonyms"])
+            allNews.update_one({"_id": allNewsi["_id"]}, {"$set": {"ton": ton, "textton": textton}})
+            print("Общая оценка {}".format(ton))
 
 if __name__ == "__main__":
     __main__()

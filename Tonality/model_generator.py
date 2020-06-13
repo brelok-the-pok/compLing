@@ -48,7 +48,6 @@ def __main__():
     file_pos = pd.read_csv('positive.csv', sep=';')
     file_neg = pd.read_csv('negative.csv', sep=';')
 
-    numtwet = 10
     # Получим наборы данных для разных типов твитов
     positive_tweets = file_pos.iloc[:, 3].tolist().copy()
     negative_tweets = file_neg.iloc[:, 3].tolist().copy()
