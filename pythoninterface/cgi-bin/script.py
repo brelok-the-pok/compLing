@@ -9,21 +9,32 @@ listnames = news.find()
 print("Content-type: text/html")
 print()
 print('<style type="text/css">')
-print('.new{')
-print('overflow: auto; ')
-print('max-height: 100px; ')
-print('font-family: Verdana, Arial, Helvetica, sans-serif; ')
-print('color: #333366;')
+
+print('a{')
+
+print('text-decoration: none; ')
+print('color: white;')
 print(' }')
+
+print('.new{')
+print('padding-top: 4px; ')
+print('margin-bottom: 8px; ')
+print('border-bottom: 1px solid; ')
+print('text-align: center; ')
+print('background-image: linear-gradient(145deg, #ee82ee, slateblue, #ffd86a, purple);')
+print('color: white;')
+print(' }')
+
 print('</style>')
 
 for new in listnames:
     name = new['name']
     listnews = new['news']
+    ton = new['ton']
     idnew = new['_id']
-    text1 = '<h3><a href="texts.py?name={}">{}</a></h3>'.format(idnew, name)
-
-    print(text1)
+    text1 = '<div class="new"><h3><a href="texts.py?name={}">{}</a></h3>'.format(idnew, name)
+    text2 = '<p>{}</p></div>'.format(ton)
+    print(text1+text2)
 
 
 
