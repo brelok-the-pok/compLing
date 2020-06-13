@@ -3,15 +3,12 @@ from pymongo import MongoClient
 from tqdm.auto import trange, tqdm
 import sys, re
 from multiprocessing.dummy import Pool as ThreadPool
+from nltk.corpus import stopwords
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import format_number as fmt
 from pyspark.ml.feature import Word2Vec, Word2VecModel
-from lxml import etree
-import re
-import string
-import nltk
-from nltk.corpus import stopwords
+from pyspark.sql import Row
 
 delimiter = '<end of news>'
 
@@ -535,6 +532,76 @@ def make_model():
 
     spark.stop()
 
+def make_model2():
+    spark = SparkSession \
+        .builder \
+        .appName("SimpleApplication") \
+        .getOrCreate()
+
+    data = read_data_for_mode('forPersonModel')
+
+    text = []
+    data_for_db = []
+
+    for person in data:
+        FIO = person[0].split(' ')
+        unigram = FIO[0].capitalize() + '_' + FIO[1].capitalize()
+        db_entity = {"name": person[0], "news": person[1], "unigram":unigram}
+        data_for_db.append(db_entity)
+
+        for news in person[1]:
+            text.append(news)
+
+    data = read_data_for_mode('forPlacesModel')
+
+    for place in data:
+        NAME = place[0].split(' ')
+        unigram = '_'.join(NAME)
+        db_entity = {"name": place[0], "news": place[1], "unigram": unigram}
+        data_for_db.append(db_entity)
+        for news in place[1]:
+            text.append(news)
+
+    def remove_punctuation(text):
+        return re.sub(r'[^\w\s^-]', '', text)
+
+    for i in range(len(text)):
+        text[i] = remove_punctuation(text[i])
+
+    def remove_stop_words(text: str):
+        ru_stop = stopwords.words('russian')
+        tokens = []
+        line_tokenized = text.split()
+        for token in line_tokenized:
+            if not token.lower() in ru_stop:
+                tokens.append(token)
+        return tokens
+
+    tokens_list = []
+    for news in text:
+        tokens_list.append(remove_stop_words(news))
+
+
+    def get_only_words(tokens):
+        return list(filter(lambda x: re.match('[а-яА-Я]+', x), tokens))
+
+    tokens = []
+    for some_tokens in tokens_list:
+        tokens.append(get_only_words(some_tokens))
+
+    R = Row('ID', 'news_words')
+    documentDF = spark.createDataFrame([R(i, x) for i, x in enumerate(tokens)])
+    documentDF.show()
+
+    model = Word2Vec(vectorSize=3, minCount=1, inputCol="news_words", outputCol="result")
+    model_fitted = model.fit(documentDF)
+    model_transformed = model_fitted.transform(documentDF)
+
+    model.save('/home/pok/sem/project/models/model0mincount/model')
+    model_fitted.save('/home/pok/sem/project/models/model0mincount/fitted')
+
+    spark.stop()
+
 def get_synonyms(word: str, count: int):
     spark = SparkSession \
         .builder \
@@ -653,6 +720,9 @@ def NamesSynonyms():
 def __main__():
     print('Main entered')
 
+    word = "Бочаров_Андрей"
+    count_of_synonyms = 10
+    get_synonyms(word, count_of_synonyms)
 
 
 
