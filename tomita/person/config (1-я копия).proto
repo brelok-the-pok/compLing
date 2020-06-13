@@ -1,0 +1,25 @@
+encoding "utf8";
+
+TTextMinerConfig {
+  Dictionary = "/home/pok/sem/tomita-parser/build/bin/mydic.gzt"; 
+
+  PrettyOutput = "/home/pok/sem/project/TomitaOut/PrettyOutput.html"; 
+
+  Input = {
+    File = "/home/pok/sem/project/newsTexts/AllTexts.txt";
+  }
+
+  Articles = [
+    { Name = "имя" },
+    { Name = "People" }
+  ]
+
+  Facts = [
+    { Name = "Person" }
+  ]
+
+  Output = {
+    File = "/home/pok/sem/project/TomitaOut/facts.txt";
+    Format = text;
+  }
+}

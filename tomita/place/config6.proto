@@ -1,0 +1,19 @@
+encoding "utf8"; // указываем кодировку, в которой написан конфигурационный файл
+
+TTextMinerConfig {
+  Dictionary = "/home/pok/sem/tomita-parser/build/bin/mydic.gzt"; // путь к корневому словарю
+
+Output = {
+    File = "/home/pok/sem/project/TomitaOut/facts6.txt"; // путь к входному файлу
+	  Format=text
+}
+
+
+  Articles = [
+    { Name = "наша_первая_грамматика" } // название статьи в корневом словаре,которая содержит запускаемую грамматику
+  ]
+
+Facts = [
+    { Name = "Place" }
+  ]
+}

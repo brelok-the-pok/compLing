@@ -1,1 +1,1 @@
-import project.parseNames
+import project.personality_parser
