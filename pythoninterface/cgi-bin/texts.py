@@ -28,12 +28,11 @@ print('}')
 
 
 print('.Negative{')
-print('border: 4px solid green;')
-
+print('border: 4px solid red;')
 print('}')
 
 print('.Positive{')
-print('border: 4px solid red;')
+print('border: 4px solid green;')
 print('}')
 
 print('</style>')
