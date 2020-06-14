@@ -10,19 +10,31 @@ print("Content-type: text/html")
 print()
 print('<style type="text/css">')
 
-print('a{')
-
+print('h3 a{')
+print('color:black;')
 print('text-decoration: none; ')
-print('color: white;')
+print('transition:.2s;')
+print(' }')
+
+print('h3 a:hover{')
+print('color: rgb(32, 55, 160);')
 print(' }')
 
 print('.new{')
 print('padding-top: 4px; ')
+print('border-radius: 16px;')
+print('border: 2px solid black;')
 print('margin-bottom: 8px; ')
 print('border-bottom: 1px solid; ')
 print('text-align: center; ')
-print('background-image: linear-gradient(145deg, #ee82ee, slateblue, #ffd86a, purple);')
-print('color: white;')
+print('background-image: radial-gradient(#f0f0f0, #d8d8d8);')
+
+print('font-size: 120%;')
+print('transition:.2s;')
+print(' }')
+
+print('.new:hover{')
+print('box-shadow: 2px -2px 15px 0px #464646; }')
 print(' }')
 
 print('</style>')
